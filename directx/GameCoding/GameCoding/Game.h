@@ -14,51 +14,38 @@ private:
 	HWND _hwnd;
 	shared_ptr<Graphics> _graphics; 
 private:
-	void CreateGeometry();
-	void CreateInputLayOut();
-
-	void CreateVS();
-	void CreatePS();
 
 	void CreateRasterizerState();
 	void CreateSamplerState();
 	void CreateBlendState();
-	void CreateSRV();
-
-	void CreateConstantBuffer();
-
-	void LoadShaderFromFile(const wstring& path, const string& name, const string& version, ComPtr<ID3DBlob>& blob);
-
-	
-
 	
 private:
 	//Geometry
-	vector<Vertex> _vertices;
+	//vector<Vertex> _vertices;
+	//기하학적인 도형 제작 한번만 만들면 됨 
+	//resource로 빼줄 필요가 있음 
+	shared_ptr<Geometry<VertexTextureData>>_geometry;
 	shared_ptr<VertexBuffer> _vertexBuffer;
-	
-	vector<uint32> _indices;
 	shared_ptr<IndexBuffer> _indexBuffer;
 	shared_ptr<InputLayout> _inputLayout;
 	
-	//VS
-	ComPtr<ID3D11VertexShader> _vertexShader = nullptr;
-	ComPtr<ID3DBlob> _vsBlob = nullptr;
-	//RAS
+	shared_ptr<VertexShader> _vertexShader;
+	
 	ComPtr<ID3D11RasterizerState> _rasterizerState = nullptr;
-	//PS
-	ComPtr<ID3D11PixelShader> _pixelShader = nullptr;
-	ComPtr <ID3DBlob>_psBlob = nullptr;
 
-	//SRV
-	ComPtr<ID3D11ShaderResourceView>_shaderResourceView = nullptr;
+	shared_ptr<PixelShader> _pixelShader;
+	
+	shared_ptr<Texture> _texture1;
+	shared_ptr<Texture> _texture2;
+
 
 	ComPtr<ID3D11SamplerState> _samplerState = nullptr;
 	ComPtr<ID3D11BlendState> _blendState = nullptr;
 	//[CPU<->RAM] [GPU<->RAM]};
 private:
 	TransformData _transformData;
-	ComPtr<ID3D11Buffer> _constantBuffer;
+	shared_ptr<ConstantBuffer<TransformData>> _constantBuffer;
+	//ComPtr<ID3D11Buffer> _constantBuffer;
 
 	Vec3 _localPosition = { 0.f,0.f,0.f };
 	Vec3 _localRotation = { 0.f,0.f,0.f };
