@@ -9,6 +9,7 @@
 // STL
 #include <memory>
 #include <iostream>
+#include <array>
 #include <vector>
 #include <list>
 #include <map>
@@ -52,3 +53,8 @@ using namespace Microsoft::WRL;
 #include "Shader.h"
 #include"ConstantBuffer.h"
 #include"Texture.h"
+#include"RasterizerState.h"
+#include"SamplerState.h"
+#include"BlendState.h"
+#include"Pipeline.h"
+#include"Transform.h"

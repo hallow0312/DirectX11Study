@@ -49,6 +49,24 @@
     <Filter Include="소스 파일\00.Engine\Pipeline\05.OutputMerger">
       <UniqueIdentifier>{4bbd14d3-e890-4203-b76e-bd2c24c9075c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\00.Engine\GameObject">
+      <UniqueIdentifier>{4f85c107-db64-4223-8d8e-43049435eb96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00.Engine\Animator">
+      <UniqueIdentifier>{c5e2de4d-3b35-4df9-8e2e-3c78ae88058d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00.Engine\MeshRenderer">
+      <UniqueIdentifier>{ecb8a1cd-8451-49c8-a90f-e42f36e60156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00.Engine\MonoBehaviour">
+      <UniqueIdentifier>{0e040795-3dcc-48c4-9f01-790e6731458b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00.Engine\GameObject\Component">
+      <UniqueIdentifier>{24886ddd-4c86-476c-86f9-e428104912ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00.Engine\GameObject\Component\Camera">
+      <UniqueIdentifier>{589da48c-a505-431d-9932-387bba09274a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -120,6 +138,24 @@
     <ClInclude Include="SamplerState.h">
       <Filter>소스 파일\00.Engine\Pipeline\04.PixelShader</Filter>
     </ClInclude>
+    <ClInclude Include="Pipeline.h">
+      <Filter>소스 파일\00.Engine\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>소스 파일\00.Engine\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>소스 파일\00.Engine\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>소스 파일\00.Engine\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="MonoBehaviour.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>소스 파일\00.Engine\GameObject\Component\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -172,6 +208,24 @@
     </ClCompile>
     <ClCompile Include="SamplerState.cpp">
       <Filter>소스 파일\00.Engine\Pipeline\04.PixelShader</Filter>
+    </ClCompile>
+    <ClCompile Include="Pipeline.cpp">
+      <Filter>소스 파일\00.Engine\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>소스 파일\00.Engine\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>소스 파일\00.Engine\GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>소스 파일\00.Engine\GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="MonoBehaviour.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>소스 파일\00.Engine\GameObject\Component\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
