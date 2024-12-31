@@ -4,49 +4,50 @@
 Graphics::Graphics(HWND hwnd)
 {
 	_hwnd = hwnd;
+
 	CreateDeviceAndSwapChain();
 	CreateRenderTargetView();
-	SetViewPort();
+	SetViewport();
 }
 
 Graphics::~Graphics()
 {
+
 }
 
 void Graphics::RenderBegin()
 {
 	_deviceContext->OMSetRenderTargets(1, _renderTargetView.GetAddressOf(), nullptr);
 	_deviceContext->ClearRenderTargetView(_renderTargetView.Get(), _clearColor);
-	_deviceContext->RSSetViewports(1, &_viewPort);
+	_deviceContext->RSSetViewports(1, &_viewport);
 }
 
 void Graphics::RenderEnd()
 {
-	//[]<- []
 	HRESULT hr = _swapChain->Present(1, 0);
 	CHECK(hr);
 }
 
 void Graphics::CreateDeviceAndSwapChain()
 {
-	DXGI_SWAP_CHAIN_DESC _desc;
-	ZeroMemory(&_desc, sizeof(_desc)); //필수
+	DXGI_SWAP_CHAIN_DESC desc;
+	ZeroMemory(&desc, sizeof(desc));
 	{
-		_desc.BufferDesc.Width = GWinSizeX;
-		_desc.BufferDesc.Height = GWinSizeY;
-		_desc.BufferDesc.RefreshRate.Numerator = 60;
-		_desc.BufferDesc.RefreshRate.Denominator = 1;
-		_desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		_desc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
-		_desc.SampleDesc.Count = 1;
-		_desc.SampleDesc.Quality = 0;
-		_desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-		_desc.BufferCount = 1;
-		_desc.OutputWindow = _hwnd;
-		_desc.Windowed = true;
-		_desc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+		desc.BufferDesc.Width = GWinSizeX;
+		desc.BufferDesc.Height = GWinSizeY;
+		desc.BufferDesc.RefreshRate.Numerator = 60;
+		desc.BufferDesc.RefreshRate.Denominator = 1;
+		desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		desc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+		desc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
+		desc.SampleDesc.Count = 1;
+		desc.SampleDesc.Quality = 0;
+		desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+		desc.BufferCount = 1;
+		desc.OutputWindow = _hwnd;
+		desc.Windowed = TRUE;
+		desc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	}
-
 
 	HRESULT hr = ::D3D11CreateDeviceAndSwapChain(
 		nullptr,
@@ -56,7 +57,7 @@ void Graphics::CreateDeviceAndSwapChain()
 		nullptr,
 		0,
 		D3D11_SDK_VERSION,
-		&_desc,
+		&desc,
 		_swapChain.GetAddressOf(),
 		_device.GetAddressOf(),
 		nullptr,
@@ -68,24 +69,22 @@ void Graphics::CreateDeviceAndSwapChain()
 
 void Graphics::CreateRenderTargetView()
 {
-	// rendertargetview: swapchain에 buffer 2개가 제작되고 
-	// 그 버퍼를 묘사하기위한 함수 
 	HRESULT hr;
+
 	ComPtr<ID3D11Texture2D> backBuffer = nullptr;
 	hr = _swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)backBuffer.GetAddressOf());
 	CHECK(hr);
 
-	_device->CreateRenderTargetView(backBuffer.Get(), nullptr, _renderTargetView.GetAddressOf());
+	hr = _device->CreateRenderTargetView(backBuffer.Get(), nullptr, _renderTargetView.GetAddressOf());
 	CHECK(hr);
 }
 
-void Graphics::SetViewPort()
+void Graphics::SetViewport()
 {
-	
-	_viewPort.TopLeftX = 0.f;
-	_viewPort.TopLeftX = 0.f;
-	_viewPort.Width = static_cast<float>(GWinSizeX);
-	_viewPort.Height = static_cast<float>(GWinSizeY);
-	_viewPort.MinDepth = 0.f;
-	_viewPort.MaxDepth = 1.0f;
+	_viewport.TopLeftX = 0.0f;
+	_viewport.TopLeftY = 0.0f;
+	_viewport.Width = static_cast<float>(GWinSizeX);
+	_viewport.Height = static_cast<float>(GWinSizeY);
+	_viewport.MinDepth = 0.0f;
+	_viewport.MaxDepth = 1.0f;
 }

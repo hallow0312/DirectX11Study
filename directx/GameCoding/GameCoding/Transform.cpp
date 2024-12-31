@@ -1,12 +1,14 @@
 #include "pch.h"
 #include "Transform.h"
 
-Transform::Transform():Super(ComponentType::Transform)
+Transform::Transform() : Super(ComponentType::Transform)
 {
+
 }
 
 Transform::~Transform()
 {
+
 }
 
 void Transform::Awake()
@@ -41,31 +43,28 @@ Vec3 ToEulerAngles(Quaternion q)
 
 void Transform::UpdateTransform()
 {
-	Matrix matScale = Matrix::CreateScale(_localScale );
+	Matrix matScale = Matrix::CreateScale(_localScale);
 	Matrix matRotation = Matrix::CreateRotationX(_localRotation.x);
 	matRotation *= Matrix::CreateRotationY(_localRotation.y);
 	matRotation *= Matrix::CreateRotationZ(_localRotation.z);
 	Matrix matTranslation = Matrix::CreateTranslation(_localPosition);
 
-	//S R T
 	_matLocal = matScale * matRotation * matTranslation;
+
 	if (HasParent())
 	{
 		_matWorld = _matLocal * _parent->GetWorldMatrix();
 	}
-	else _matWorld = _matLocal;
+	else
+	{
+		_matWorld = _matLocal;
+	}
 
-	
 	Quaternion quat;
-	
 	_matWorld.Decompose(_scale, quat, _position);
 	_rotation = ToEulerAngles(quat);
 
-	_right = Vec3::TransformNormal(Vec3::Right, _matWorld);
-	_up = Vec3::TransformNormal(Vec3::Up, _matWorld);
-	_look = Vec3::TransformNormal(Vec3::Backward, _matWorld); //오른손 좌표계라 backward
-	
-	//children
+	// Children
 	for (const shared_ptr<Transform>& child : _children)
 		child->UpdateTransform();
 }
@@ -74,10 +73,9 @@ void Transform::SetScale(const Vec3& worldScale)
 {
 	if (HasParent())
 	{
-		Vec3  parentScale = _parent->GetScale();
-
+		Vec3 parentScale = _parent->GetScale();
 		Vec3 scale = worldScale;
-		scale.x /= parentScale.x; 
+		scale.x /= parentScale.x;
 		scale.y /= parentScale.y;
 		scale.z /= parentScale.z;
 		SetLocalScale(scale);
@@ -93,15 +91,14 @@ void Transform::SetRotation(const Vec3& worldRotation)
 	if (HasParent())
 	{
 		Matrix inverseMatrix = _parent->GetWorldMatrix().Invert();
+
 		Vec3 rotation;
 		rotation.TransformNormal(worldRotation, inverseMatrix);
+
 		SetLocalRotation(rotation);
-			
 	}
 	else
-	{
 		SetLocalRotation(worldRotation);
-	}
 }
 
 void Transform::SetPosition(const Vec3& worldPosition)
@@ -109,8 +106,10 @@ void Transform::SetPosition(const Vec3& worldPosition)
 	if (HasParent())
 	{
 		Matrix worldToParentLocalMatrix = _parent->GetWorldMatrix().Invert();
+
 		Vec3 position;
 		position.Transform(worldPosition, worldToParentLocalMatrix);
+
 		SetLocalPosition(position);
 	}
 	else

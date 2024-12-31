@@ -20,4 +20,4 @@ std::shared_ptr<GameObject> Component::GetGameObject()
 std::shared_ptr<Transform> Component::GetTransform()
 {
 	return _gameObject.lock()->GetTransform();
-	}
+}

@@ -20,14 +20,14 @@ enum
 	FIXED_COMPONENT_COUNT = static_cast<uint8>(ComponentType::End) - 1
 };
 
-class Component 
+class Component
 {
 public:
 	Component(ComponentType type);
 	virtual ~Component();
 
 	virtual void Awake() { }
-	virtual void Start() { }
+	virtual void Start() { }	
 	virtual void Update() { }
 	virtual void LateUpdate() { }
 	virtual void FixedUpdate() { }

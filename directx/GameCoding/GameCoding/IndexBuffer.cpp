@@ -1,12 +1,15 @@
 #include "pch.h"
 #include "IndexBuffer.h"
 
-IndexBuffer::IndexBuffer(ComPtr<ID3D11Device> device):_device(device)
+IndexBuffer::IndexBuffer(ComPtr<ID3D11Device> device)
+	: _device(device)
 {
+
 }
 
 IndexBuffer::~IndexBuffer()
 {
+
 }
 
 void IndexBuffer::Create(const vector<uint32>& indices)
@@ -27,4 +30,3 @@ void IndexBuffer::Create(const vector<uint32>& indices)
 	HRESULT hr = _device->CreateBuffer(&desc, &data, _indexBuffer.GetAddressOf());
 	CHECK(hr);
 }
-

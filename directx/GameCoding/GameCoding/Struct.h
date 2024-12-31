@@ -1,15 +1,21 @@
 #pragma once
 #include "Types.h"
 
+
 //struct Vertex
 //{
-//	Vec3 position;//12BYTE
+//	Vec3 position;
 //	//Color color;
-//	Vec2 uv; 
+//	Vec2 uv;
 //};
+
+struct CameraData
+{
+	Matrix matView = Matrix::Identity;
+	Matrix matProjection = Matrix::Identity;
+};
+
 struct TransformData
 {
-	Matrix matWorld= Matrix::Identity;
-	Matrix matView= Matrix::Identity;
-	Matrix matProjection = Matrix::Identity;
+	Matrix matWorld = Matrix::Identity;
 };

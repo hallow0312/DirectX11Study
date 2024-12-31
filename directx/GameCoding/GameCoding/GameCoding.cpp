@@ -2,10 +2,11 @@
 #include "framework.h"
 #include "GameCoding.h"
 #include "Game.h"
+
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
-HINSTANCE hInst;                                // 현재 인스턴스입니다.
+HINSTANCE hInst;
 HWND hWnd;
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
@@ -13,43 +14,35 @@ ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 
-
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
                      _In_ LPWSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
-
-    // TODO: 여기에 코드를 입력합니다.
- 
-    //1)윈도우 창 정보 등록
+    // 1) 윈도우 창 정보 등록
     MyRegisterClass(hInstance);
 
-    //2)윈도우 창 생성
+    // 2) 윈도우 창 생성
     if (!InitInstance (hInstance, nCmdShow))
-    {
         return FALSE;
-    }
 
-    Game game;
-    game.Init(hWnd);
+    GGame->Init(hWnd);
 
-    MSG msg{};
+    MSG msg = {};
 
     // 기본 메시지 루프입니다:
-    while (msg.message!=WM_QUIT)
+    while (msg.message != WM_QUIT)
     {
         if (::PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
         }
         else
         {
-            game.Update();
-            game.Render();
+            GGame->Update();
+            GGame->Render();
         }
-       
     }
 
     return (int) msg.wParam;
@@ -76,8 +69,8 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_GAMECODING));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName = NULL;
-    wcex.lpszClassName = L"GameCoding";
+    wcex.lpszMenuName   = NULL;
+    wcex.lpszClassName  = L"GameCoding";
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
     return RegisterClassExW(&wcex);
@@ -97,11 +90,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   RECT windowRect = { 0,0,GWinSizeX,GWinSizeY };
+   RECT windowRect = {0, 0, GWinSizeX, GWinSizeY};
    ::AdjustWindowRect(&windowRect, WS_OVERLAPPEDWINDOW, false);
 
-    hWnd = CreateWindowW(L"GameCoding", L"Client", WS_OVERLAPPEDWINDOW,
-       CW_USEDEFAULT, 0,  windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, nullptr, nullptr, hInstance, nullptr);
+   hWnd = CreateWindowW(L"GameCoding", L"Client", WS_OVERLAPPEDWINDOW,
+      CW_USEDEFAULT, 0, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
    {
@@ -158,4 +151,3 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     }
     return 0;
 }
-

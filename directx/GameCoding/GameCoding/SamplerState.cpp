@@ -1,12 +1,14 @@
 #include "pch.h"
 #include "SamplerState.h"
 
-SamplerState::SamplerState(ComPtr<ID3D11Device> device):_device(device)
+SamplerState::SamplerState(ComPtr<ID3D11Device> device) : _device(device)
 {
+
 }
 
 SamplerState::~SamplerState()
 {
+
 }
 
 void SamplerState::Create()
@@ -21,10 +23,12 @@ void SamplerState::Create()
 	desc.BorderColor[2] = 0;
 	desc.BorderColor[3] = 1;
 	desc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 	desc.MaxAnisotropy = 16;
 	desc.MaxLOD = FLT_MAX;
 	desc.MinLOD = FLT_MIN;
 	desc.MipLODBias = 0.0f;
 
-	_device->CreateSamplerState(&desc, _samplerState.GetAddressOf());
+	HRESULT hr = _device->CreateSamplerState(&desc, _samplerState.GetAddressOf());
+	CHECK(hr);
 }
